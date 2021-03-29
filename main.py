@@ -170,11 +170,15 @@ def place_randomly(board):
 def check_for_rows(board):
     """checks if someone won through row"""
     for row in range(len(board)):
-        if (board[row][0] == player and board[row][1] == player and board[row][2] == player) or (board[row][0] == comp and board[row][1] == comp and board[row][2] == comp):
+        if (board[row][0] == player and board[row][1] == player and board[row][2] == player):
             print("You Won!!")
+            return True
+        elif (board[row][0] == comp and board[row][1] == comp and board[row][2] == comp):
+            print("Computer Won!!")
             return True
 
 def check_for_columns(board):
+    """Checks if someone won thorugh columns"""
     c_list = []
     x = 0
     y = 0
@@ -183,19 +187,21 @@ def check_for_columns(board):
                 c_list.append(board[row][y])        
             x += 1
             y += 1
-        
-    if (c_list[0] == player and c_list[1] == player and c_list[2] == player) or c_list[0] == comp and c_list[1] == comp and c_list[2] == comp:
-            print("You Won :)")
-            return True
-    elif (c_list[3] == player and c_list[4] == player and c_list[5] == player) or c_list[3] == comp and c_list[4] == comp and c_list[5] == comp:
-            print("You Won :)")
-            return True
-    elif (c_list[6] == player and c_list[7] == player and c_list[8] == player) or c_list[6] == comp and c_list[7] == comp and c_list[8] == comp:
-            print("You Won :)")
-            return True
+
+
+
+    if (c_list[0] == player and c_list[1] == player and c_list[2] == player) or (c_list[3] == player and c_list[4] == player and c_list[5] == player) or (c_list[6] == player and c_list[7] == player and c_list[8] == player):
+        print("You Won :)")
+        return True
+    elif (c_list[0] == comp and c_list[1] == comp and c_list[2] == comp) or (c_list[3] == comp and c_list[4] == comp and c_list[5] == comp) or (c_list[6] == comp and c_list[7] == comp and c_list[8] == comp):
+        print('Computer won')
+        return True
+
+
 
 
 def check_for_diagonal(board):
+    """Checks if someone won through diagonals"""
     g = 0
     h = 0 
     d_list = []
@@ -215,17 +221,18 @@ def check_for_diagonal(board):
         j -= 1
 
 
-    if (d_list[0] == player and d_list[1] == player and d_list[2] == player) or d_list[0] == comp and d_list[1] == comp and d_list[2] == comp:
-            print("You Won :)")
-            return True
-    elif (d_list[3] == player and d_list[4] == player and d_list[5] == player) or d_list[3] == comp and d_list[4] == comp and d_list[5] == comp:
-            print('You won :)')
-            return True
+    if(d_list[0] == player and d_list[1] == player and d_list[2] == player) or (d_list[3] == player and d_list[4] == player and d_list[5] == player):
+        print('You won :)')
+        return True
+    elif (d_list[0] == comp and d_list[1] == comp and d_list[2] == comp) or (d_list[3] == comp and d_list[4] == comp and d_list[5] == comp):
+        print("Computer won :(")
+        return True
 
 
 
 
 def check_for_tie(board):
+    """Checks if the game is a tie"""
     items_in_board = []
     for row in range(len(board)):
         items_in_board.extend(board[row])
@@ -238,6 +245,7 @@ def check_for_tie(board):
 def main():
     display_board()
     valid_entries = ['1','2','3']
+    # asking user where to place
     while True:
         print("Your Turn!")
         row_num = input("Enter which row you want to place it in: ")
@@ -261,21 +269,21 @@ def main():
             board[row_num][column_num] = player
         except Exception as err:
             print('ERROR! Choose a different spot!')
+            display_board()
             continue
 
         display_board()
 
-
+        # checks if the player
         if check_for_rows(board) or check_for_columns(board) or check_for_diagonal(board) or check_for_tie(board):
             return
 
         print("Computer's turn!")
         place_for_row(board)
 
-
-
-
-
+        # checks if the computer won
+        if check_for_rows(board) or check_for_columns(board) or check_for_diagonal(board) or check_for_tie(board):
+            return
 
 
 main()
