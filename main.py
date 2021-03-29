@@ -274,7 +274,7 @@ def main():
 
         display_board()
 
-        # checks if the player
+        # checks if the player won
         if check_for_rows(board) or check_for_columns(board) or check_for_diagonal(board) or check_for_tie(board):
             return
 
